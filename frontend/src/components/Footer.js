@@ -1,13 +1,9 @@
-import React from "react";
-
-function Footer({loggedIn}) {
-  return (
-    <div>
-      {loggedIn && <footer className={loggedIn ? "footer" : ""}> 
-        <p className="footer__copyright">© 2023 Mesto Russia</p>
-      </footer> }
-    </div>
-  );
+function Footer() {
+	return (
+		<footer className='footer'>
+			<p className='footer__copyright'>&copy; {new Date().getFullYear()} Ksenia Beznos</p>
+		</footer>
+	);
 }
 
 export default Footer;

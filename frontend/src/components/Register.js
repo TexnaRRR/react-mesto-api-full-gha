@@ -1,54 +1,58 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-function Register({registerUser}) {
-  const [formValue, setFormValue] = useState({
-      email: '',
-      password: ''
-    }
-  )
-  const [errorMessage, setErrorMessage] = useState();
+function Register({ title, btnName, handleSubmit }) {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
-  const {email, password} = formValue;
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formValue.email || !formValue.password) {
-      setErrorMessage('Both fields are required');
-      return;
-    }
-    registerUser({email, password});
-  }
+	function handleChangeEmail(e) {
+		setEmail(e.target.value);
+	}
 
-  return (
-    <div className="register">
-      <p className="register__welcome">
-        Регистрация
-      </p>
-      <div className="register__error">{errorMessage}</div>
-      <form className="register__form" onSubmit={handleSubmit}>
-        <input type="text" value={formValue.email} onChange={handleChange} id="email" placeholder="Email"
-               name="email"
-               minLength="2" maxLength="40"/>
-        <span className="register__error"></span>
-        <input type="password" value={formValue.password} onChange={handleChange} id="password" placeholder="Пароль"
-               name="password"
-               minLength="2" maxLength="200"/>
-        <span className="register__error"></span>
-        <button type="submit" className="register__link">Зарегистрироваться</button>
-      </form>
-      <div className="register__signin">
-        <p>Уже зарегистрированы?</p>
-        <Link to="/signin" className="register__login-link" replace>Войти</Link>
-      </div>
-    </div>
-  )
+	function handleChangePassword(e) {
+		setPassword(e.target.value);
+	}
+
+	function handleSubmitRegister(e) {
+		handleSubmit(e, email, password);
+	}
+
+	return (
+		<form className='auth__form' noValidate onSubmit={handleSubmitRegister}>
+			<h2 className='auth__title'>{title}</h2>
+			<input
+				className='auth__input'
+				id='email'
+				type='email'
+				name='email'
+				placeholder='Email'
+				required
+				onChange={handleChangeEmail}
+				value={email}
+			/>
+			<input
+				id='password'
+				className='auth__input'
+				type='password'
+				name='password'
+				placeholder='Пароль'
+				required
+				onChange={handleChangePassword}
+				value={password}
+			/>
+
+			<button className='auth__btn' type='submit'>
+				{btnName}
+			</button>
+
+			<p className='auth__signin'>
+				Уже зарегистрированы?
+				<Link to='/sign-in' className='auth__link-enter'>
+					Войти
+				</Link>
+			</p>
+		</form>
+	);
 }
 
 export default Register;

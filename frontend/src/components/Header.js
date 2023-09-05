@@ -1,20 +1,47 @@
-import React from 'react';
-import NavBar from "./NavBar";
-import headerlogo from "../images/header__logo.svg";
-import {useLocation, Link} from "react-router-dom";
+import logo from '../images/Logo.svg';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
-function Header({loggedIn, handleSignOut, userEmail}) {
-  const location = useLocation();
-  return (
-    <header className="header">
-      <img src={headerlogo} className="header__logo" alt="Место_Россия"/>
-      {location.pathname === "/signin" &&
-        <Link className="header__sign-in" to="/signup">Регистрация</Link>}
-      {location.pathname === "/signup" &&
-        <Link className="header__sign-in" to="/signin">Войти</Link>}
-      {loggedIn && <NavBar handleSignOut={handleSignOut} userEmail={userEmail}/> }
-    </header>
-  );
+function Header({ email, signOut }) {
+	const buttons = {
+		login: 'Войти',
+		register: 'Регистрация',
+		logout: 'Выйти',
+	};
+
+	return (
+		<header className='header'>
+			<img className='header__logo' src={logo} alt='Логотип Mesto' />
+			<div className='header__text-group'>
+				<p className='header__email'>{email}</p>
+				<Routes>
+					<Route
+						path='/'
+						element={
+							<NavLink to='/sign-in' className='header__buttons' onClick={signOut}>
+								{buttons.logout}
+							</NavLink>
+						}
+					/>
+					<Route
+						path='/sign-in'
+						element={
+							<NavLink to='/sign-up' className='header__buttons'>
+								{buttons.register}
+							</NavLink>
+						}
+					/>
+					<Route
+						path='/sign-up'
+						element={
+							<NavLink to='/sign-in' className='header__buttons'>
+								{buttons.login}
+							</NavLink>
+						}
+					/>
+				</Routes>
+			</div>
+		</header>
+	);
 }
 
 export default Header;

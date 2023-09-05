@@ -1,46 +1,68 @@
-import React from 'react';
-import PopupWithForm from "./PopupWithForm";
+import { useState, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup(props) {
-  const inputTitleRef = React.useRef('');
-  const inputLinkRef = React.useRef('');
+function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    props.onAddPlace({
-      title: inputTitleRef.current.value,
-      link: inputLinkRef.current.value
-    })
-  }
+const [name, setName] = useState('');
+const [link, setLink] = useState('');
 
-  React.useEffect(() => {
-    inputTitleRef.current.value = '';
-    inputLinkRef.current.value = '';
-  }, [props.isOpen]);
+useEffect(() => {
+	setName('');
+	setLink('');
+}, [isOpen]);
 
-  return (
-    <PopupWithForm
-      name="add"
-      title="Новое место"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      onSubmit={handleSubmit}
-      textButton="Создать"
-    >
-      <fieldset className="popup__inputs">
-        <label htmlFor="title-input" className="popup__label">
-          <input ref={inputTitleRef} type="text" id="title-input" name="title" placeholder="Название"
-                 className="popup__input popup__input_type_title" required minLength="2" maxLength="30"/>
-          <span className="title-input-error popup__input-error popup__input-error_span"></span>
-        </label>
-        <label htmlFor="link-input" className="popup__label">
-          <input ref={inputLinkRef} type="url" id="link-input" name="link" placeholder="Ссылка на картинку"
-                 className="popup__input popup__input_type_link" required/>
-          <span className="link-input-error popup__input-error popup__input-error_span"></span>
-        </label>
-      </fieldset>
-    </PopupWithForm>
-  )
+	function handleChangeName(e) {
+		setName(e.target.value);
+	}
+
+	function handleChangeLink(e) {
+		setLink(e.target.value);
+	}
+
+function handleSubmit(e) {
+	e.preventDefault();
+	onAddPlace({
+		name,
+    link
+	});
+}
+
+	return (
+		<PopupWithForm
+			title='Новое место'
+			name='cards'
+			button='Создать'
+			label='Создать'
+			isOpen={isOpen}
+			onClose={onClose}
+			onSubmit={handleSubmit}
+		>
+			<input
+				id='title-input'
+				className='popup__input popup__input_type_title'
+				type='text'
+				name='titleInput'
+				placeholder='Название'
+				required
+				minLength='2'
+				maxLength='30'
+				onChange={handleChangeName}
+        value={name}
+			/>
+			<span className='title-input-error popup__input-error'></span>
+			<input
+				id='link-input'
+				className='popup__input popup__input_type_link'
+				type='url'
+				name='linkInput'
+				placeholder='Ссылка на картинку'
+				required
+				onChange={handleChangeLink}
+        value={link}
+			/>
+			<span className='link-input-error popup__input-error'></span>
+		</PopupWithForm>
+	);
 }
 
 export default AddPlacePopup;

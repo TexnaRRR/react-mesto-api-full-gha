@@ -1,9 +1,14 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Error400 = require('../errors/400');
 const Error401 = require('../errors/401');
 const Error404 = require('../errors/404');
 const Error409 = require('../errors/409');
+const JWT_DEV = require('../utils/jwtDev');
+
+const { NODE_ENV } = process.env;
+const JWT_KEY = process.env.REACT_APP_JWT_SECRET;
 
 const getUsers = async (req, res, next) => {
   try {
@@ -52,6 +57,9 @@ const createUser = async (req, res, next) => {
     if (err.code === 11000) {
       const conflict = new Error409('email уже существует');
       next(conflict);
+    }
+    if (err.name === 'ValidationError') {
+      next(new Error400('Некоррекные данные'));
     } else {
       next(err);
     }
@@ -72,7 +80,11 @@ const updateUser = async (req, res, next) => {
       res.send(user);
     }
   } catch (err) {
-    next(err);
+    if (err.name === 'ValidationError') {
+      next(new Error400('Некоррекные данные'));
+    } else {
+      next(err);
+    }
   }
 };
 
@@ -90,7 +102,11 @@ const updateAvatar = async (req, res, next) => {
       res.send(user);
     }
   } catch (err) {
-    next(err);
+    if (err.name === 'ValidationError') {
+      next(new Error400('Некоррекные данные'));
+    } else {
+      next(err);
+    }
   }
 };
 
@@ -104,7 +120,7 @@ const login = async (req, res, next) => {
 
     const token = jwt.sign(
       { _id: user._id },
-      'FJeq0bP5YA}j#AJnGZWzrB*JY%lTt6',
+      NODE_ENV === 'production' ? JWT_KEY : JWT_DEV,
       { expiresIn: '7d' },
     );
 
@@ -113,6 +129,14 @@ const login = async (req, res, next) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.send({ message: 'Успех успешный' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie('jwt').send({ message: 'Вы успешно вышли из аккаунта' });
   } catch (err) {
     next(err);
   }
@@ -137,5 +161,6 @@ module.exports = {
   updateUser,
   updateAvatar,
   login,
+  logout,
   getAboutMe,
 };

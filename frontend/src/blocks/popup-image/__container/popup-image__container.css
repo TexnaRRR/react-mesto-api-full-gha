@@ -1,9 +1,0 @@
-.popup-image__container {
-  color: #FFFFFF;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}

@@ -1,56 +1,50 @@
-import React, {useState} from 'react';
-import * as auth from "../utils/Auth";
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
 
-function Login({onLogin}) {
-  const [formValue, setFormValue] = useState({
-      email: '',
-      password: ''
-    }
-  )
-  const [errorMessage, setErrorMessage] = useState()
-  const navigate = useNavigate();
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
+function Login({ title, btnName, handleSubmit }) {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+	function handleChangeEmail(e) {
+		setEmail(e.target.value);
+	}
 
-    if (!formValue.email || !formValue.password) {
-      setErrorMessage('Both fields are required');
-      return;
-    }
-    onLogin({
-      email: formValue.email,
-      password: formValue.password
-    });
-  }
+	function handleChangePassword(e) {
+		setPassword(e.target.value);
+	}
 
+	function handleLoginSubmit(e) {
+		handleSubmit(e, email, password);
+	}
 
-  return (
-    <div className="login">
-      <p className="login__welcome">
-        Вход
-      </p>
-      <div className="register__error">{errorMessage}</div>
-      <form className="login__form" onSubmit={handleSubmit}>
-        <input type="text" value={formValue.email} onChange={handleChange} id="email" placeholder="Email"
-               name="email"
-               minLength="2" maxLength="40"/>
-        <span className="login__error"></span>
-        <input type="password" value={formValue.password} onChange={handleChange} id="password" placeholder="Пароль"
-               name="password"
-               minLength="2" maxLength="200"/>
-        <span className="login__error"></span>
-        <button type="submit" className="login__link">Войти</button>
-      </form>
-    </div>
-  )
+	return (
+		<form className='auth__form' noValidate onSubmit={handleLoginSubmit}>
+			<h2 className='auth__title'>{title}</h2>
+			<input
+				className='auth__input'
+				id='email'
+				type='email'
+				name='email'
+				placeholder='Email'
+				required
+				onChange={handleChangeEmail}
+				value={email}
+			/>
+			<input
+				id='password'
+				className='auth__input'
+				type='password'
+				name='password'
+				placeholder='Пароль'
+				required
+				onChange={handleChangePassword}
+				value={password}
+			/>
+
+			<button className='auth__btn' type='submit'>
+				{btnName}
+			</button>
+		</form>
+	);
 }
 
 export default Login;
