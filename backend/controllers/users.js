@@ -8,7 +8,7 @@ const Error409 = require('../errors/409');
 const JWT_DEV = require('../utils/jwtDev');
 
 const { NODE_ENV } = process.env;
-const JWT_KEY = process.env.REACT_APP_JWT_SECRET;
+const JWT_KEY = process.env.JWT_SECRET;
 
 const getUsers = async (req, res, next) => {
   try {
