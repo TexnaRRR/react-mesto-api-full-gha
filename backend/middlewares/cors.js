@@ -9,6 +9,7 @@ const allowedCors = [
   'http://mesto-yandex.nomoredomains.rocks',
   'http://api.mesto-yandex.nomoredomains.rocks',
   'http://api.mesto-yandex.nomoredomainsicu.ru',
+  'https://api.mesto-yandex.nomoredomainsicu.ru',
 ];
 
 const cors = (req, res, next) => {
