@@ -8,7 +8,8 @@ const { errors } = require('celebrate');
 const router = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const cors = require('./middlewares/cors');
+// const cors = require('./middlewares/cors');
+const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 const { DB_HOST = 'localhost' } = process.env;
@@ -26,8 +27,22 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-console.log('cors', cors);
-app.use(cors);
+
+app.use(cors({
+  origin: [
+    'localhost:3000',
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://localhost:3001',
+    'https://localhost:3001',
+    'https://mesto-yandex.nomoredomains.rocks',
+    'https://api.mesto-yandex.nomoredomains.rocks',
+    'http://mesto-yandex.nomoredomains.rocks',
+    'http://api.mesto-yandex.nomoredomains.rocks',
+    'http://api.mesto-yandex.nomoredomainsicu.ru',
+    'https://api.mesto-yandex.nomoredomainsicu.ru',
+],
+}));
 app.use(helmet());
 app.use(cookieParser());
 
