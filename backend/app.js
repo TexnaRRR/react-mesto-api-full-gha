@@ -11,9 +11,11 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
+const { DB_HOST = 'localhost' } = process.env;
+const { DB_PORT = '27017' } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/mestodb`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
