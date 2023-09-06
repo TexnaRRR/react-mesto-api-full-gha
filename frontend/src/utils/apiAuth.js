@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.mesto-yandex.nomoredomainsicu.ru/api';
+export const BASE_URL = 'http://api.mesto-yandex.nomoredomainsicu.ru/api';
 
 export function register(email, password) {
 	return fetch(`${BASE_URL}/signup`, {
