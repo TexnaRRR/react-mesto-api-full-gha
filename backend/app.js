@@ -43,6 +43,7 @@ app.use(cors({
     'https://alex.students.nomoredomainsicu.ru',
     'http://alex.students.nomoredomainsicu.ru',
   ],
+  credentials: true,
 }));
 app.use(helmet());
 app.use(cookieParser());
