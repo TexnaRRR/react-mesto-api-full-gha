@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const router = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 // const cors = require('./middlewares/cors');
-const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 const { DB_HOST = 'localhost' } = process.env;
@@ -27,7 +27,6 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-
 app.use(cors({
   origin: [
     'localhost:3000',
@@ -41,14 +40,17 @@ app.use(cors({
     'http://api.mesto-yandex.nomoredomains.rocks',
     'http://api.mesto-yandex.nomoredomainsicu.ru',
     'https://api.mesto-yandex.nomoredomainsicu.ru',
-],
+    'https://alex.students.nomoredomainsicu.ru',
+    'http://alex.students.nomoredomainsicu.ru',
+  ],
+  credentials: true,
 }));
 app.use(helmet());
 app.use(cookieParser());
 
 app.use(express.json());
 app.use(requestLogger);
-app.use('/api', router);
+app.use(router);
 
 app.use(errorLogger);
 app.use(errors());
