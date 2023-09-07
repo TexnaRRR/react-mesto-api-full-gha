@@ -11,6 +11,6 @@
 
 IP-адрес 158.160.24.11
 
-Frontend hhttps://api.mesto-yandex.nomoredomainsicu.ru
+Frontend https://Alex.students.nomoredomainsicu.ru
 
-Backend https://api.mesto-yandex.nomoredomainsicu.ru/api
+Backend https://api.mesto-yandex.nomoredomainsicu.ru
