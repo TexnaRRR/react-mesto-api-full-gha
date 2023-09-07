@@ -40,6 +40,8 @@ app.use(cors({
     'http://api.mesto-yandex.nomoredomains.rocks',
     'http://api.mesto-yandex.nomoredomainsicu.ru',
     'https://api.mesto-yandex.nomoredomainsicu.ru',
+    'https://alex.students.nomoredomainsicu.ru',
+    'http://alex.students.nomoredomainsicu.ru',
   ],
 }));
 app.use(helmet());
