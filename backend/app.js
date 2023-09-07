@@ -47,7 +47,8 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(requestLogger);
-app.use('/api', router);
+const BASE = process.env.NODE_ENV === 'production' ? '/api' : '';
+app.use(BASE, router);
 
 app.use(errorLogger);
 app.use(errors());
