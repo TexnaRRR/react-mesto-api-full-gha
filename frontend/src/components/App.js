@@ -169,7 +169,7 @@ function App() {
 					setLoggedIn(true);
 					setEmail(email);
 					setIsStatus(true);
-					setIsMessage('Заявка на кредит одобрена');
+					setIsMessage('Успешно');
 					navigate('/', { replace: true });
 					console.log(loggedIn);
 				}
@@ -177,7 +177,7 @@ function App() {
 			.catch((err) => {
 				console.log(err);
 				setIsStatus(false);
-				setIsMessage('Это фиаско, братан :(');
+				setIsMessage('Что-то пошло не так!');
 			})
 			.finally(() => {
 				setIsInfoTooltipOpen(true);
@@ -190,14 +190,14 @@ function App() {
 			.then((res) => {
 				if (res !== false) {
 					setIsStatus(true);
-					setIsMessage('Ну привет, пёс!');
+					setIsMessage('Успешно!');
 					navigate('/sign-in', { replace: true });
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 				setIsStatus(false);
-				setIsMessage('Это фиаско, братан :(');
+				setIsMessage('Что-то пошло не так!');
 			})
 			.finally(() => {
 				setIsInfoTooltipOpen(true);
